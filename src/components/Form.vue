@@ -201,7 +201,7 @@ import M from 'materialize-css'
 export default {
   name: 'Form',
   data() {
-     return { user: {male: '', education: '', currentSmoker: 'No', prevalentStroke: 'No', prevalentHyp: 'No', diabetes: 'No'}, result: -1}
+     return { user: {male: '', education: '', currentSmoker: 'No', prevalentStroke: 'No', prevalentHyp: 'No', diabetes: 'No'}, result: {response: -1}}
   },
   methods: {
     sendPatientData() {
