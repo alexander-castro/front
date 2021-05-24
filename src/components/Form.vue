@@ -47,13 +47,13 @@
                   <div class="input-field col s6">
                     <p>
                       <label>
-                      <input class="with-gap" name="groupSmoke" type="radio" v-model="user.currentSmoker" value="Smoker"/>
+                      <input class="with-gap" name="groupSmoke" type="radio" v-on:click="changeSmokeYes" v-model="user.currentSmoker" value="Smoker"/>
                       <span>Fumador</span>
                       </label>
                     </p>
                     <p>
                       <label>
-                        <input class="with-gap" name="groupSmoke" type="radio"  checked v-model="user.currentSmoker" value="Non Smoker"/>
+                        <input class="with-gap" name="groupSmoke" type="radio" v-on:click="changeSmoke"  checked v-model="user.currentSmoker" value="Non Smoker"/>
                         <span>No fumador</span>
                       </label>
                     </p>
@@ -186,7 +186,7 @@
                 </div>
                 <div class="card-content">
                   <p>Nuestro estudio concluyó que es muy importante cuidar la presión de la sangre, los valores normales son menos de 120
-                  en sistólica y menos de 80 en diastólica. Puedes encontra más información en e siguiente enlace.</p>
+                  en sistólica y menos de 80 en diastólica. Puedes encontra más información en el siguiente enlace.</p>
                 </div>
                 <div class="card-action">
                   <a href="https://www.heart.org/">Heart.org</a>
@@ -228,7 +228,7 @@
         </div>
       </li>
       <li>
-        <div class="collapsible-header"><i class="material-icons">groups</i>Grupo de trabajo</div>
+        <div id="contacto" class="collapsible-header"><i class="material-icons">groups</i>Grupo de trabajo</div>
         <div class="collapsible-body">
           <div class="collection">
             <a class="collection-item">Andrea Elena Garcia Lopez</a>
@@ -239,6 +239,17 @@
         </div>
       </li>
     </ul>
+    <div id="modalNolvelty" class="modal">
+      <div class="modal-content">
+        <h4>Datos fuera de rango</h4>
+        <p>Hemos encontrado que tus datos no corresponden a los rangos habituales, lo cual puede ocasionar una predicción incorrecta,
+           puede deberse a un error al ingresar la información, si estas seguro de tu información contactanos a tuDogtor@investigación.com.
+        </p>
+      </div>
+      <div class="modal-footer">
+        <a href="#!" class="modal-close waves-effect waves-green btn-flat">Ok</a>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -250,7 +261,8 @@ import M from 'materialize-css'
 export default {
   name: 'Form',
   data() {
-     return { user: {male: '', education: '', currentSmoker: 'No', prevalentStroke: 'No', prevalentHyp: 'No', diabetes: 'No'}, result: {response: -1}}
+     return { user: {male: '', education: '', currentSmoker: 'Non Smoker', prevalentStroke: 'No', prevalentHyp: 'No',
+      diabetes: 'No', cigsPerDay: 0}, result: {response: -1}}
   },
   methods: {
     sendPatientData() {
@@ -262,10 +274,20 @@ export default {
           let elem = document.querySelector('.collapsible.popout');
           let instance = M.Collapsible.getInstance(elem);
           instance.open(1);
+          if(this.result.novilty == -1){
+              var modalInstance = M.Modal.getInstance(document.querySelector('.modal'));
+              modalInstance.open();
+          }
         })
         .catch(error => {
           console.log(error);
       });
+    },
+    changeSmoke(){
+      this.user.cigsPerDay = 0
+    },
+    changeSmokeYes(){
+      this.user.cigsPerDay = ''
     }
   }
 }
