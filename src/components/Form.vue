@@ -4,8 +4,8 @@
     <p>
       Basado en el conjunto de datos de
       <a href="https://biolincc.nhlbi.nih.gov/studies/framcohort/" target="_blank" rel="noopener">Framingham Heart Study</a> 
-      y la liberia <a href="https://xgboost.readthedocs.io/en/latest/"
-       target="_blank" rel="noopener">XGBoost en Python</a>.
+      y la liberia <a href="https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LogisticRegression.html"
+       target="_blank" rel="noopener">Sklearn</a>.
     </p>
     <p><i class="material-icons" style="vertical-align: bottom;font-size: 18px !important;">warning</i> Descargo de responsabilidad: aplicación creada con fines académicos, si tiene dudas de su estado de salud
       consulte a un profesional de la medicina certificado.
@@ -165,15 +165,64 @@
             </div>
           </div>
           <div v-else-if="result.response === 1">
-            <div class="card-panel deep-orange">
-              <span class="valign-wrapper" style="color:white">
-                <img class="responsive-img" style="max-width: 5% !important" src="bad.png">
-                Al parecer tienes riesgo de tener un un accidente cardiovascular , visita a tu medico de manera urgente.
-                <div class="progress">
-                  <div class="determinate red accent-4" :style="{width: result.probability * 100 + '%'}"></div>
+            <div class="row">
+              <div class="card-panel deep-orange">
+                <span class="valign-wrapper" style="color:white">
+                  <img class="responsive-img" style="max-width: 5% !important" src="bad.png">
+                  Al parecer tienes riesgo de tener un un accidente cardiovascular , visita a tu medico de manera urgente.
+                  <div class="progress">
+                    <div class="determinate red accent-4" :style="{width: result.probability * 100 + '%'}"></div>
+                  </div>
+                  <p class="">Probabilidad del {{ (result.probability * 100).toFixed(2) }}%.</p>
+                </span>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col s4">
+                <div class="card">
+                <div class="card-image">
+                  <img style="max-width:500px; height:350px" src="https://www.biochempharmacy.com/image/biochem/image/data/NEW/N1qI0rrZ1618042738.jpg">
+                  <span class="card-title" style="background: linear-gradient(to top, rgba(0, 0, 0, 0.85), transparent); width: 100%">Presión sanguinea</span>
                 </div>
-                <p class="">Probabilidad del {{ (result.probability * 100).toFixed(2) }}%.</p>
-              </span>
+                <div class="card-content">
+                  <p>Nuestro estudio concluyó que es muy importante cuidar la presión de la sangre, los valores normales son menos de 120
+                  en sistólica y menos de 80 en diastólica. Puedes encontra más información en e siguiente enlace.</p>
+                </div>
+                <div class="card-action">
+                  <a href="https://www.heart.org/">Heart.org</a>
+                </div>
+              </div>
+              </div>
+              <div class="col s4">
+                <div class="card">
+                <div class="card-image">
+                  <img style="max-width:500px; height:350px" src="https://www.nutriban.com/wp-content/uploads/2019/03/diabetes-1.jpg">
+                  <span class="card-title" style="background: linear-gradient(to top, rgba(0, 0, 0, 0.85), transparent); width: 100%">Azucar en la sangre</span>
+                </div>
+                <div class="card-content">
+                  <p>Adicional si tienes antecedentes de diabetes en tu familia y aun si no es asi, debes cuidar los niveles de azucar en la sangre. 
+                    Considera seguir los siguientes consejos basados en mejorar tu alimentación y otros habitos.</p>
+                </div>
+                <div class="card-action">
+                  <a href="https://www.diabetes.org.uk/guide-to-diabetes/enjoy-food/eating-with-diabetes/10-ways-to-eat-well-with-diabetes">Diabetes.ork.uk</a>
+                </div>
+                </div>
+              </div>
+              <div class="col s4">
+                <div class="card">
+                <div class="card-image">
+                  <img style="max-width:500px; height:350px" src="https://www.grupogamma.com/wp-content/uploads/2012/02/El-tabaquismo-y-el-c%C3%A1ncer-de-pulm%C3%B3n-web.jpg">
+                  <span class="card-title" style="background: linear-gradient(to top, rgba(0, 0, 0, 0.85), transparent); width: 100%">Tabaquismo</span>
+                </div>
+                <div class="card-content">
+                  <p>Por ultimo, encontramos que el tabaquismo puede influir en aumentar el riesgo de un accidente cardiovascular por ello si fumas
+                      te recomendamos dejar de hacerlo, intenta probar alguna app para evitar hacerlo.</p>
+                </div>
+                <div class="card-action">
+                  <a href="https://www.xatakandroid.com/aplicaciones-android/siete-apps-que-te-ayudaran-a-dejar-de-fumar">aplicaciones para dejar de fumar</a>
+                </div>
+              </div>
+              </div>
             </div>
           </div>
         </div>
