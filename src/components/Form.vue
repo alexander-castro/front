@@ -1,170 +1,140 @@
 <template>
   <div class="hello">
-    <h1>Bievenido a KoraApp, ingresa tus datos para verificar el riesgo de un accidente cerebrovascular</h1>
+    <h1>Bievenido a KoraApp, ingresa tus datos para verificar el riesgo de un accidente cardiovascular</h1>
     <p>
       Basado en el conjunto de datos de
       <a href="https://biolincc.nhlbi.nih.gov/studies/framcohort/" target="_blank" rel="noopener">Framingham Heart Study</a> 
-      y el modelo LogisticRegression de <a href="https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LogisticRegression.html"
-       target="_blank" rel="noopener">Scikit-learn</a>.
+      y la liberia <a href="https://xgboost.readthedocs.io/en/latest/"
+       target="_blank" rel="noopener">XGBoost en Python</a>.
     </p>
     <p><i class="material-icons" style="vertical-align: bottom;font-size: 18px !important;">warning</i> Descargo de responsabilidad: aplicación creada con fines académicos, si tiene dudas de su estado de salud
       consulte a un profesional de la medicina certificado.
     </p>
     <ul class="collapsible popout" id="panel">
       <li class="active">
-      <div class="collapsible-header"><i class="material-icons">account_circle</i>Tus datos</div>
+      <div class="collapsible-header"><i class="material-icons">account_circle</i>Tu información</div>
         <div class="collapsible-body">
           <div class="row">
             <form class="col s12" @submit.prevent>
               <div class="row">
-                <div class="input-field col s6">
-                  <select v-model="user.male">
-                    <option value="" selected>Selecciona tu genero</option>
-                    <option value=1>Hombre</option>
-                    <option value=0>Mujer</option>
-                  </select>
-                  <label>Genero</label>
-                </div>
-                <div class="input-field col s6">
-                  <input id="age" type="number" class="validate" v-model="user.age">
-                  <label for="age">Edad</label>
-                </div>
-                <div class="input-field col s6">
-                  <select v-model="user.education">
-                    <option value="" selected>Selecciona tu nivel educativo</option>
-                    <option value=1>Primaria</option>
-                    <option value=2>Secundaria</option>
-                    <option value=3>Tecnico</option>
-                    <option value=4>Universidad</option>
-                  </select>
-                  <label>Nivel educativo</label>
-                </div>
-                <div class="input-field col s6">
-                  <p>
-                    <label>
-                    <input class="with-gap" name="groupSmoke" type="radio" v-model="user.smoker" v-bind:value="1"/>
-                    <span>Fumador</span>
-                    </label>
-                  </p>
-                  <p>
-                    <label>
-                      <input class="with-gap" name="groupSmoke" type="radio"  checked v-model="user.smoker" v-bind:value="0"/>
-                      <span>No fumador</span>
-                    </label>
-                  </p>
-                </div>
-                <div class="input-field col s6">
-                  <input id="cigarrets" type="number" class="validate" v-model="user.cigaretts">
-                  <label for="cigarrets">Cigarrillos por dia</label>
-                </div>
-                <div class="input-field col s6">
-                  <p>
-                    <label>
-                    <input class="with-gap" name="groupArterial" type="radio" v-model="user.BPMED" v-bind:value="1"/>
-                    <span>Si toma medicamentos para la presión arterial</span>
-                    </label>
-                  </p>
-                  <p>
-                    <label>
-                      <input class="with-gap" name="groupArterial" type="radio"  checked v-model="user.BPMED" v-bind:value="0"/>
-                      <span>No toma medicamentos para la presión arterial</span>
-                    </label>
-                  </p>
-                </div>
-                <div class="input-field col s6">
-                  <p>
-                    <label>
-                    <input class="with-gap" name="groupCoronary" type="radio" v-model="user.PREVCHD" v-bind:value="1"/>
-                    <span>Hay prevalencia de enfermedad coronaria</span>
-                    </label>
-                  </p>
-                  <p>
-                    <label>
-                      <input class="with-gap" name="groupCoronary" type="radio" checked v-model="user.PREVCHD" v-bind:value="0"/>
-                      <span>No hay prevalencia de enfermedad coronaria</span>
-                    </label>
-                  </p>
-                </div>
-                <div class="input-field col s6">
-                  <p>
-                    <label>
-                    <input class="with-gap" name="groupBrain" type="radio" v-model="user.PRESTROKE" v-bind:value="1"/>
-                    <span>Hay prevalencia de evento cerebrovascular</span>
-                    </label>
-                  </p>
-                  <p>
-                    <label>
-                      <input class="with-gap" name="groupBrain" type="radio" checked v-model="user.PRESTROKE" v-bind:value="0"/>
-                      <span>No hay prevalencia de evento cerebrovascular</span>
-                    </label>
-                  </p>
-                </div>
-                <div class="input-field col s6">
-                  <p>
-                    <label>
-                    <input class="with-gap" name="groupChest" type="radio" v-model="user.PREVAP" v-bind:value="1"/>
-                    <span>Hay prevalencia angina de pecho</span>
-                    </label>
-                  </p>
-                  <p>
-                    <label>
-                      <input class="with-gap" name="groupChest" type="radio" checked v-model="user.PREVAP" v-bind:value="0"/>
-                      <span>No hay prevalencia angina de pecho</span>
-                    </label>
-                  </p>
-                </div>
-                <div class="input-field col s6">
-                  <p>
-                    <label>
-                    <input class="with-gap" name="groupHypertension" type="radio" v-model="user.PREVHYP" v-bind:value="1"/>
-                    <span>Hay prevalencia de hipertensión</span>
-                    </label>
-                  </p>
-                  <p>
-                    <label>
-                      <input class="with-gap" name="groupHypertension" type="radio" checked v-model="user.PREVHYP" v-bind:value="0"/>
-                      <span>No hay prevalencia de hipertensión</span>
-                    </label>
-                  </p>
-                </div>
-                <div class="input-field col s6">
-                  <p>
-                    <label>
-                    <input class="with-gap" name="groupDiabetis" type="radio" v-model="user.DIABETES" v-bind:value="1"/>
-                    <span>Con antecedente de diabetes</span>
-                    </label>
-                  </p>
-                  <p>
-                    <label>
-                      <input class="with-gap" name="groupDiabetis" type="radio" checked v-model="user.DIABETES" v-bind:value="0"/>
-                      <span>Sin antecedente de diabetes</span>
-                    </label>
-                  </p>
-                </div>
-                <div class="input-field col s6">
-                  <input id="age" type="number" class="validate" v-model="user.TOTCHOL">
-                  <label for="age">Colesterol total</label>
-                </div>
-                <div class="input-field col s6">
-                  <input id="age" type="number" class="validate" v-model="user.BMI">
-                  <label for="age">Indice de masa corporal</label>
-                </div>
-                <div class="input-field col s6">
-                  <input id="age" type="number" class="validate" v-model="user.SYSBP">
-                  <label for="age">Presión arterial sistólica</label>
-                </div>
-                <div class="input-field col s6">
-                  <input id="age" type="number" class="validate" v-model="user.DIABP">
-                  <label for="age">Presión arterial diastólica</label>
-                </div>
-                <div class="input-field col s6">
-                  <input id="age" type="number" class="validate" v-model="user.heartRate">
-                  <label for="age">Ritmo cardiaco</label>
-                </div>
-                <div class="input-field col s6">
-                  <input id="age" type="number" class="validate" v-model="user.glucose">
-                  <label for="age">Glucosa</label>
-                </div>
+                <ul class="collection with-header">
+                  <li class="collection-header"><h5>Demográfica</h5></li>
+                  <div class="input-field col s6">
+                    <select v-model="user.male">
+                      <option value="">Selecciona tu genero</option>
+                      <option value='Male'>Hombre</option>
+                      <option value='Female'>Mujer</option>
+                    </select>
+                    <label>Genero</label>
+                  </div>
+                  <div class="input-field col s6">
+                    <input id="age" type="number" class="validate" v-model="user.age">
+                    <label for="age">Edad</label>
+                  </div>
+                  <div class="input-field col s6">
+                    <select v-model="user.education">
+                      <option value="">Selecciona tu nivel educativo</option>
+                      <option value='Some HS'>Primaria</option>
+                      <option value='High School'>Secundaria</option>
+                      <option value='Some college'>Tecnico</option>
+                      <option value='College'>Universidad</option>
+                    </select>
+                    <label>Nivel educativo</label>
+                  </div>
+                </ul>
+                <ul class="collection with-header">
+                  <li class="collection-header"><h5>Comportamental</h5></li>
+                  <div class="input-field col s6">
+                    <p>
+                      <label>
+                      <input class="with-gap" name="groupSmoke" type="radio" v-model="user.currentSmoker" value="Smoker"/>
+                      <span>Fumador</span>
+                      </label>
+                    </p>
+                    <p>
+                      <label>
+                        <input class="with-gap" name="groupSmoke" type="radio"  checked v-model="user.currentSmoker" value="Non Smoker"/>
+                        <span>No fumador</span>
+                      </label>
+                    </p>
+                  </div>
+                  <div class="input-field col s6">
+                    <input id="cigarrets" type="number" class="validate" v-model="user.cigsPerDay">
+                    <label for="cigarrets">Cigarrillos por dia</label>
+                  </div>
+                </ul>
+                <ul class="collection with-header">
+                  <li class="collection-header"><h5>Historial medico</h5></li>
+                  <div class="input-field col s6">
+                    <p>
+                      <label>
+                      <input class="with-gap" name="groupBrain" type="radio" v-model="user.prevalentStroke" value="Yes"/>
+                      <span>Hay prevalencia de evento cerebrovascular</span>
+                      </label>
+                    </p>
+                    <p>
+                      <label>
+                        <input class="with-gap" name="groupBrain" type="radio" checked v-model="user.prevalentStroke" value="No"/>
+                        <span>No hay prevalencia de evento cerebrovascular</span>
+                      </label>
+                    </p>
+                  </div>
+                  <div class="input-field col s6">
+                    <p>
+                      <label>
+                      <input class="with-gap" name="groupHypertension" type="radio" v-model="user.prevalentHyp" value="Yes"/>
+                      <span>Hay prevalencia de hipertensión</span>
+                      </label>
+                    </p>
+                    <p>
+                      <label>
+                        <input class="with-gap" name="groupHypertension" type="radio" checked v-model="user.prevalentHyp" value="No"/>
+                        <span>No hay prevalencia de hipertensión</span>
+                      </label>
+                    </p>
+                  </div>
+                  <div class="input-field col s6">
+                    <p>
+                      <label>
+                      <input class="with-gap" name="groupDiabetis" type="radio" v-model="user.diabetes" value="Yes"/>
+                      <span>Con antecedente de diabetes</span>
+                      </label>
+                    </p>
+                    <p>
+                      <label>
+                        <input class="with-gap" name="groupDiabetis" type="radio" checked v-model="user.diabetes" value="No"/>
+                        <span>Sin antecedente de diabetes</span>
+                      </label>
+                    </p>
+                  </div>
+                </ul>
+                <ul class="collection with-header">
+                  <li class="collection-header"><h5>Estado medico actual</h5></li>
+                  <div class="input-field col s6">
+                    <input id="totChol" type="number" class="validate" v-model="user.totChol">
+                    <label for="totChol">Colesterol total</label>
+                  </div>
+                  <div class="input-field col s6">
+                    <input id="BMI" type="number" step="0.1" class="validate" v-model="user.BMI">
+                    <label for="BMI">Indice de masa corporal</label>
+                  </div>
+                  <div class="input-field col s6">
+                    <input id="sysBP" type="number" step="0.1" class="validate" v-model="user.sysBP">
+                    <label for="sysBP">Presión arterial sistólica</label>
+                  </div>
+                  <div class="input-field col s6">
+                    <input id="diaBP" type="number" step="0.1" class="validate" v-model="user.diaBP">
+                    <label for="diaBP">Presión arterial diastólica</label>
+                  </div>
+                  <div class="input-field col s6">
+                    <input id="heartRate" type="number" class="validate" v-model="user.heartRate">
+                    <label for="heartRate">Ritmo cardiaco</label>
+                  </div>
+                  <div class="input-field col s6">
+                    <input id="glocusa" type="number" class="validate" v-model="user.glucose">
+                    <label for="glocusa">Glucosa</label>
+                  </div>
+                </ul>
               </div>
               <div class="row center s12">
                 <button class="waves-light btn" name="action" @click="sendPatientData">Analizar
@@ -178,14 +148,33 @@
       <li>
         <div class="collapsible-header"><i class="material-icons">analytics</i>Tus resultados</div>
         <div class="collapsible-body">
-          <div v-if="result === -1">
-            Por favor diligencia el formulario, para mostrarte tu resultado.
+          <div v-if="result.response === -1">
+            <div class="card-panel blue">
+              <span class="valign-wrapper" style="color:white">
+                <img class="responsive-img" style="max-width: 5% !important" src="basic.png">
+                Por favor diligencia el formulario, para mostrarte tu resultado.
+              </span>
+            </div>
           </div>
-          <div v-else-if="result === 0">
-            Al parecer no tienes riesgo de tener un un accidente cerebrovascular, sigue cuidandote. 
+          <div v-else-if="result.response === 0">
+            <div class="card-panel green">
+              <span class="valign-wrapper" style="color:white">
+                <img class="responsive-img" style="max-width: 5% !important" src="good.png">
+                Al parecer no tienes riesgo de tener un un accidente cardiovascular , sigue cuidandote. 
+              </span>
+            </div>
           </div>
-          <div v-else-if="result === 1">
-            Al parecer tienes riesgo de tener un un accidente cerebrovascular, visita a tu medico de manera urgente. 
+          <div v-else-if="result.response === 1">
+            <div class="card-panel deep-orange">
+              <span class="valign-wrapper" style="color:white">
+                <img class="responsive-img" style="max-width: 5% !important" src="bad.png">
+                Al parecer tienes riesgo de tener un un accidente cardiovascular , visita a tu medico de manera urgente.
+                <div class="progress">
+                  <div class="determinate red accent-4" :style="{width: result.probability * 100 + '%'}"></div>
+                </div>
+                <p class="">Probabilidad del {{ (result.probability * 100).toFixed(2) }}%.</p>
+              </span>
+            </div>
           </div>
         </div>
       </li>
@@ -212,9 +201,7 @@ import M from 'materialize-css'
 export default {
   name: 'Form',
   data() {
-     return { user: {BMI: 0 , BPMED: 0, DIABETES: 0, DIABP: 0, PRESTROKE: 0, PREVAP: 0, PREVCHD: 0, PREVHYP: 0,
-      SYSBP: 0, TOTCHOL: 0, age: 0, cigaretts: 0, education: 1, glucose: 0, heartRate: 0, male: 0, 
-      smoker: 0}, result: -1}
+     return { user: {male: '', education: '', currentSmoker: 'No', prevalentStroke: 'No', prevalentHyp: 'No', diabetes: 'No'}, result: -1}
   },
   methods: {
     sendPatientData() {
